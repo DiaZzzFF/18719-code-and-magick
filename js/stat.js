@@ -8,7 +8,7 @@ var CLOUD_Y = 10;
 
 var GAP = 10;
 
-var BAR_HEIGHT = -150;
+var BAR_HEIGHT = 150;
 var BAR_WIDTH = 40;
 var BAR_GAP = 50;
 
@@ -39,6 +39,18 @@ var getRandomAlpha = function (min, max) {
   return Math.random() * (max - min) + min;
 };
 
+var getBarChart = function (ctx, times, i, maxTime) {
+  ctx.fillRect(CLOUD_X + GAP * 5.5 + (BAR_GAP + BAR_WIDTH) * i, CLOUD_Y + GAP * 23, BAR_WIDTH, (-BAR_HEIGHT * times[i]) / maxTime);
+};
+
+var getPlayersTime = function (ctx, times, i) {
+  ctx.fillText(Math.floor(times[i]), CLOUD_X + GAP * 5.5 + (BAR_GAP + BAR_WIDTH) * i, CLOUD_Y + GAP * 6);
+};
+
+var getPlayerNames = function (ctx, players, i) {
+  ctx.fillText(players[i], CLOUD_X + GAP * 5.5 + (BAR_GAP + BAR_WIDTH) * i, CLOUD_Y + GAP * 24);
+};
+
 window.renderStatistics = function (ctx, players, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
@@ -50,9 +62,10 @@ window.renderStatistics = function (ctx, players, times) {
   for (var i = 0; i < players.length; i++) {
     ctx.fillStyle = players[i] === 'Вы' ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 0, 255, ' + getRandomAlpha(0.1, 1) + ')';
 
-    ctx.fillRect(CLOUD_X + GAP * 5.5 + (BAR_GAP + BAR_WIDTH) * i, CLOUD_Y + GAP * 23, BAR_WIDTH, (BAR_HEIGHT * times[i]) / maxTime);
+    getBarChart(ctx, times, i, maxTime);
+
     ctx.fillStyle = '#000';
-    ctx.fillText(Math.floor(times[i]), CLOUD_X + GAP * 5.5 + (BAR_GAP + BAR_WIDTH) * i, CLOUD_Y + GAP * 6);
-    ctx.fillText(players[i], CLOUD_X + GAP * 5.5 + (BAR_GAP + BAR_WIDTH) * i, CLOUD_Y + GAP * 24);
+    getPlayersTime(ctx, times, i);
+    getPlayerNames(ctx, players, i);
   }
 };
