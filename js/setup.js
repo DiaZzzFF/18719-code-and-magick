@@ -150,65 +150,37 @@ setupClose.addEventListener('keydown', function (evt) {
   }
 });
 
-// Функция изменения цвета >>мантии<< персонажа (по нажатию) для обработчика событий
-var changeWizardCoatColor = function () {
-  var myWizardCoatColor = getRandomData(WIZARD_COAT_COLORS);
+// Функция изменения цвета (по нажатию) для обработчика событий
+var changeColor = function (arr, element, input) {
+  var myColor = getRandomData(arr);
 
-  wizardCoat.style.fill = wizardCoatInput.value = myWizardCoatColor;
+  input.value = myColor;
 
-  return myWizardCoatColor;
-};
+  if (input === fireballInput) {
+    element.style.background = myColor;
+  } else {
+    element.style.fill = myColor;
+  }
 
-// Функция изменения цвета >>глаз<< персонажа (по нажатию) для обработчика событий
-var changeWizardEyesColor = function () {
-  var myWizardEyesColor = getRandomData(WIZARD_EYES_COLORS);
-
-  wizardEyes.style.fill = wizardEyesInput.value = myWizardEyesColor;
-
-  return myWizardEyesColor;
-};
-
-// Функция изменения цвета >>фаерболов<< (по нажатию) для обработчика событий
-var changeFireballColor = function () {
-  var myFireballColor = getRandomData(FIREBALL_COLORS);
-
-  fireball.style.background = fireballInput.value = myFireballColor;
-
-  return myFireballColor;
+  return myColor;
 };
 
 wizardCoat.addEventListener('click', function () {
-  changeWizardCoatColor();
+  changeColor(WIZARD_COAT_COLORS, wizardCoat, wizardCoatInput);
 });
 
 wizardEyes.addEventListener('click', function () {
-  changeWizardEyesColor();
+  changeColor(WIZARD_EYES_COLORS, wizardEyes, wizardEyesInput);
 });
 
 fireball.addEventListener('click', function () {
-  changeFireballColor();
+  changeColor(FIREBALL_COLORS, fireball, fireballInput);
 });
 
-// Функция валидации формы для обработчика событий (часть_1)
-var getValidations = function () {
-  if (setupUserName.validity.tooShort) {
-    setupUserName.setCustomValidity('Имя должно состоять минимум из 2-х символов');
-  } else if (setupUserName.validity.tooLong) {
-    setupUserName.setCustomValidity('Имя не должно превышать 25-ти символов');
-  } else if (setupUserName.validity.valueMissing) {
-    setupUserName.setCustomValidity('Обязательное поле');
-  } else {
-    setupUserName.setCustomValidity('');
-  }
-};
-
-setupUserName.addEventListener('invalid', function () {
-  getValidations();
-});
-
-// Обработчик события ('input') для валидации формы (часть_2)
+// Обработчик события для валидации формы
 setupUserName.addEventListener('input', function (evt) {
   var target = evt.target;
+
   if (target.value.length < 2) {
     target.setCustomValidity('Имя должно состоять минимум из 2-х символов');
   } else {
