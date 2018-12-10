@@ -189,5 +189,32 @@ fireball.addEventListener('click', function () {
   changeFireballColor();
 });
 
+// Функция валидации формы для обработчика событий (часть_1)
+var getValidations = function () {
+  if (setupUserName.validity.tooShort) {
+    setupUserName.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+  } else if (setupUserName.validity.tooLong) {
+    setupUserName.setCustomValidity('Имя не должно превышать 25-ти символов');
+  } else if (setupUserName.validity.valueMissing) {
+    setupUserName.setCustomValidity('Обязательное поле');
+  } else {
+    setupUserName.setCustomValidity('');
+  }
+};
+
+setupUserName.addEventListener('invalid', function () {
+  getValidations();
+});
+
+// Обработчик события ('input') для валидации формы (часть_2)
+setupUserName.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value.length < 2) {
+    target.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+  } else {
+    target.setCustomValidity('');
+  }
+});
+
 similarListElement.appendChild(getDocumentFragment());
 setup.querySelector('.setup-similar').classList.remove('hidden');
