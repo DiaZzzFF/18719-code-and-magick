@@ -44,13 +44,19 @@ var WIZARD_EYES_COLORS = [
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 
-var setupOpen = document.querySelector('.setup-open');
 var setup = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
 var setupClose = setup.querySelector('.setup-close');
 var setupUserName = setup.querySelector('.setup-user-name');
 
 var similarListElement = setup.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+
+var setupPlayer = setup.querySelector('.setup-player');
+var wizardCoat = setupPlayer.querySelector('.wizard-coat');
+var wizardEyes = setupPlayer.querySelector('.wizard-eyes');
+var wizardCoatInput = setupPlayer.querySelector('input[name="coat-color"]');
+var wizardEyesInput = setupPlayer.querySelector('input[name="eyes-color"]');
 
 // Функция генерации случайных данных.
 var getRandomData = function (arr) {
@@ -132,6 +138,32 @@ setupClose.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
     closePopup();
   }
+});
+
+// Функция изменения цвета >>мантии<< персонажа (по нажатию) для обработчика событий
+var changeWizardCoatColor = function () {
+  var myWizardCoatColor = getRandomData(WIZARD_COAT_COLORS);
+
+  wizardCoat.style.fill = wizardCoatInput.value = myWizardCoatColor;
+
+  return myWizardCoatColor;
+};
+
+// Функция изменения цвета >>глаз<< персонажа (по нажатию) для обработчика событий
+var changeWizardEyesColor = function () {
+  var myWizardEyesColor = getRandomData(WIZARD_EYES_COLORS);
+
+  wizardEyes.style.fill = wizardEyesInput.value = myWizardEyesColor;
+
+  return myWizardEyesColor;
+};
+
+wizardCoat.addEventListener('click', function () {
+  changeWizardCoatColor();
+});
+
+wizardEyes.addEventListener('click', function () {
+  changeWizardEyesColor();
 });
 
 similarListElement.appendChild(getDocumentFragment());
