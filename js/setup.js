@@ -41,6 +41,14 @@ var WIZARD_EYES_COLORS = [
   'green'
 ];
 
+var FIREBALL_COLORS = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
+
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 
@@ -55,8 +63,10 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template').c
 var setupPlayer = setup.querySelector('.setup-player');
 var wizardCoat = setupPlayer.querySelector('.wizard-coat');
 var wizardEyes = setupPlayer.querySelector('.wizard-eyes');
+var fireball = setupPlayer.querySelector('.setup-fireball-wrap');
 var wizardCoatInput = setupPlayer.querySelector('input[name="coat-color"]');
 var wizardEyesInput = setupPlayer.querySelector('input[name="eyes-color"]');
+var fireballInput = setupPlayer.querySelector('input[name="fireball-color"]');
 
 // Функция генерации случайных данных.
 var getRandomData = function (arr) {
@@ -158,12 +168,25 @@ var changeWizardEyesColor = function () {
   return myWizardEyesColor;
 };
 
+// Функция изменения цвета >>фаерболов<< (по нажатию) для обработчика событий
+var changeFireballColor = function () {
+  var myFireballColor = getRandomData(FIREBALL_COLORS);
+
+  fireball.style.background = fireballInput.value = myFireballColor;
+
+  return myFireballColor;
+};
+
 wizardCoat.addEventListener('click', function () {
   changeWizardCoatColor();
 });
 
 wizardEyes.addEventListener('click', function () {
   changeWizardEyesColor();
+});
+
+fireball.addEventListener('click', function () {
+  changeFireballColor();
 });
 
 similarListElement.appendChild(getDocumentFragment());
